@@ -1,0 +1,46 @@
+
+1.create java project and save with appropriate project name 
+
+2.Right click on project and create 3 java class , name it as
+a.SpWordcount-main class
+b.SpWordcountMapper-mapper class
+c.SpWordcountReducer-reducer class
+
+3.Add Jar files-right click on project , 
+a.choose build path option 
+b.choose configure build path 
+c.click on add external jars
+d.path - Desktop/hadoop-java-jars - select all by pressing ctrl A , click ok 
+
+4.Add implementation code in all three java files 
+
+5.commands for execution - open new terminal 
+
+6.hadoop dfs -mkdir /input - create directory to store all dataset files in HDFS- 
+  hadoop dfs -ls /input    -displays files inside input directory
+
+7.hadoop dfs -put local file system path /input/  - copies file from local file system to HDFS 
+
+8.hadoop jar path-to-jarfile mainclass /path-to-inputfile /output
+
+copy paste path wherever required 
+
+9.to check output there are 2 ways :
+
+a.check output from browser --- open firefox browser type in url   localhost:50070- browse filesystem choose output directory and open part-00000 file 
+
+b.use cat command
+
+   hadoop dfs -ls /output --displays contents of output directory   
+   hadoop dfs -cat /output/part-00000 - displays contents of this file 
+
+
+Hint: In main Class change 
+
+class name in JobConf() function 
+class name in setMapperClass() function
+class name in setreducerClass() function 
+main method change in run() with constructor name 
+ 
+
+

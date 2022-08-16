@@ -1,0 +1,21 @@
+
+Open terminal in home directory, and change user to `hdoop` -->
+$>> su - hdoop
+
+Check for Hadoop commands -->
+$>> hdfs
+
+Start dfs -->
+$>> ./start-dfs.sh
+
+Start yarn -->
+$>> ./start-yarn.sh
+
+Stop dfs -->
+$>> ./stop-dfs.sh
+
+Stop yarn -->
+$>> ./stop-yarn.sh
+
+Check if all components of Hadoop are present -->
+$>> jps

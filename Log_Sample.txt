@@ -1,0 +1,94 @@
+       MAP REDUCE - Web Log analysis----Print count value for each IP-- Application web usage mining,                                                 User Browsing Pattern, web site search 
+
+1.Prepare dataset-log.txt
+
+string[0]= Ip address
+
+<form action="get/post"> 1-5, 200-success-OK , 404-page not found , 500-internal server code
+
+  ip address,date time,http get method/resource http version, status code, no of bytes--- 
+      
+96.7.8.17 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 -split a-mapper
+96.7.1.14 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 -split b-mapper
+96.7.2.14 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 -c-mapper
+192.168.1.1 - -[24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 -d-mapper
+........1000 
+
+
+
+<key,value>---<byte offset,entire line>
+
+2. Identify output for mapper and reducer
+
+Mapper phase -<key,value>-
+					key    value
+Input-<byte offset,Entire line>-<first address,line>-<LongWritable,text>
+output-<Ip ,1>- <Text,IntWritable>
+
+
+
+
+Reducer phase -<key,value>
+Input-<ip,[1,1,1,1]>-<Text, Iterable(IntWritable)>
+output-<IP,count>-written to hdfs -<Text,Intwritable>
+
+
+
+Procedure for eclipse
+3.create java project ..add these classess
+add jar files
+ProcessLogs-Main class
+LogMapper-mapper implementation 
+LogReducer-reducer implementation 
+
+
+4.Create Jar file-click on export-name for jar file -log.jar
+
+5.Go to terminal -use hadoop commands and generate output
+
+create directory-mkdir
+copy dataset file to hdfs-put
+use jar command and generate output-hadoop jar 
+ 
+200mb=64mb+64mb+64mb+8mb-A,B,C,D- -DATANODE
+
+
+		      	         INPUT <log.txt>
+96.7.8.17 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 -a
+96.7.1.14 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 -b
+96.7.2.14 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 -c
+192.168.1.1 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433-d
+
+
+ 		RECORD READER<LongWritable,TEXT>
+		(BYTE OFFSET,ENTIRE LINE)
+	 (0,"96.7.8.17 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 ")-s[0]
+	 (77,"96.7.1.14 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 ")
+	 (153,"96.7.1.14 - - [24/Apr/2011:04:20:11 -0400] "GET /cat.jpg HTTP/1.1" 200 12433 ")
+
+				
+
+MAPPER output- <TEXT,INTWRITABLE> 
+	 <"96.7.8.17",1>  
+	 <"96.7.1.14",1>
+	 <"96.7.1.14",1>					
+	
+Sorting & shuffling
+	<"96.7.8.17",[1]>-<Text,Iterable(IntWritable)>
+	<"96.7.1.14",[1,1]> 
+                                                    
+						                             
+REDUCER (TEXT,INTWRITABLE)
+                                                         
+<"96.7.8.17",1> <"96.7.8.14",2>
+
+
+
+                                      
+				 
+
+
+
+ 			
+
+	   			
